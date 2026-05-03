@@ -157,7 +157,7 @@ public class AgentMind extends Mind {
         visionHEC.setName("visionHEC");
         visionHEC.addInput(visionMC);
         visionHEC.addOutput(visionMO); // This is the output memory object
-        visionHEC.setPublishSubscribe(true);
+        // visionHEC.setPublishSubscribe(true);
         insertCodelet(visionHEC);
         registerCodelet(visionHEC,"Sensory");
 
@@ -170,7 +170,7 @@ public class AgentMind extends Mind {
         innerSenseHEC.setName("innerSenseHEC");
         innerSenseHEC.addInput(innerSenseMC);
         innerSenseHEC.addOutput(innerSenseMO); // This is the output memory object
-        innerSenseHEC.setPublishSubscribe(true);
+        // innerSenseHEC.setPublishSubscribe(true);
         insertCodelet(innerSenseHEC);
         registerCodelet(innerSenseHEC,"Sensory");
 
@@ -186,7 +186,7 @@ public class AgentMind extends Mind {
         appleDetectorHEC.addInput(knownApplesMO);
         appleDetectorHEC.addInput(visionMO);
         appleDetectorHEC.addOutput(knownApplesMO); // This is the output memory object
-        appleDetectorHEC.setPublishSubscribe(true);
+        // appleDetectorHEC.setPublishSubscribe(true);
         insertCodelet(appleDetectorHEC);
         registerCodelet(appleDetectorHEC,"Perception");
 
@@ -201,7 +201,7 @@ public class AgentMind extends Mind {
         closestAppleDetectorHEC.addInput(innerSenseMO);
         closestAppleDetectorHEC.addInput(knownApplesMO);
         closestAppleDetectorHEC.addOutput(closestAppleMO); // This is the output memory object
-        closestAppleDetectorHEC.setPublishSubscribe(true);
+        // closestAppleDetectorHEC.setPublishSubscribe(true);
         insertCodelet(closestAppleDetectorHEC);
         registerCodelet(closestAppleDetectorHEC,"Perception");
 
@@ -218,7 +218,7 @@ public class AgentMind extends Mind {
         goToClosestAppleHEC.addInput(innerSenseMO);
         goToClosestAppleHEC.addInput(legsMO);
         goToClosestAppleHEC.addOutput(legsMO); // This is the output memory object
-        goToClosestAppleHEC.setPublishSubscribe(true);
+        // goToClosestAppleHEC.setPublishSubscribe(true);
         insertCodelet(goToClosestAppleHEC);
         registerCodelet(goToClosestAppleHEC,"Behavioral");
         behavioralCodelets.add(goToClosestAppleHEC);
@@ -237,7 +237,7 @@ public class AgentMind extends Mind {
         eatClosestAppleHEC.addInput(knownApplesMO);
         eatClosestAppleHEC.addOutput(handsMO); // This is the output memory object
         // eatClosestAppleHEC.addOutput(knownApplesMO); // This is the output memory object
-        eatClosestAppleHEC.setPublishSubscribe(true);
+        // eatClosestAppleHEC.setPublishSubscribe(true);
         insertCodelet(eatClosestAppleHEC);
         registerCodelet(eatClosestAppleHEC,"Behavioral");
         behavioralCodelets.add(eatClosestAppleHEC);
@@ -253,7 +253,7 @@ public class AgentMind extends Mind {
         forageHEC.addInput(knownApplesMO);
         forageHEC.addInput(legsMO);
         forageHEC.addOutput(legsMO); // This is the output memory object
-        forageHEC.setPublishSubscribe(true);
+        // forageHEC.setPublishSubscribe(true);
         insertCodelet(forageHEC);
         registerCodelet(forageHEC,"Behavioral");
         behavioralCodelets.add(forageHEC);
@@ -268,7 +268,7 @@ public class AgentMind extends Mind {
         legsActionHEC.setName("legsActionHEC");
         legsActionHEC.addInput(legsActionMC);
         legsActionHEC.addInput(legsMO);
-        legsActionHEC.setPublishSubscribe(true);
+        // legsActionHEC.setPublishSubscribe(true);
         insertCodelet(legsActionHEC);
         registerCodelet(legsActionHEC,"Motor");
 
@@ -281,7 +281,7 @@ public class AgentMind extends Mind {
         handsActionHEC.setName("handsActionHEC");
         handsActionHEC.addInput(handsActionMC);
         handsActionHEC.addInput(handsMO);
-        handsActionHEC.setPublishSubscribe(true);
+        // handsActionHEC.setPublishSubscribe(true);
         insertCodelet(handsActionHEC);
         registerCodelet(handsActionHEC,"Motor");
 

@@ -9,20 +9,42 @@ if (!hasProperty('mainClass')) {
     ext.mainClass = 'ExperimentMain'
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url "https://github.com/rosjava/rosjava_mvn_repo/raw/master"
+// THIS block handles the root AND all local projects simultaneously
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url "https://github.com/rosjava/rosjava_mvn_repo/raw/master" }
+        maven { url "https://cst-group.github.io/cst-dependencies/maven-repo/" }
+        maven { url 'https://jitpack.io' }
+        maven { url "https://repo.spring.io/plugins-release/" }
     }
-    maven {
-        url "https://cst-group.github.io/cst-dependencies/maven-repo/"
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'org.apache.commons' || details.requested.group == 'commons-httpclient') {
+                if (details.requested.name.contains('codec')) {
+                    details.useTarget "commons-codec:commons-codec:1.15"
+                } else if (details.requested.name.contains('io')) {
+                    details.useTarget "commons-io:commons-io:2.11.0"
+                } else if (details.requested.name.contains('lang')) {
+                    details.useTarget "org.apache.commons:commons-lang3:3.12.0"
+                } else if (details.requested.name.contains('logging')) {
+                    details.useTarget "commons-logging:commons-logging:1.2"
+                } else if (details.requested.name.contains('net')) {
+                    details.useTarget "commons-net:commons-net:3.8.0"
+                } else if (details.requested.name.contains('httpclient')) {
+                    details.useTarget "commons-httpclient:commons-httpclient:3.1"
+                }
+            }
+        }
     }
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'com.github.CST-Group:cst-desktop:1.1.0'
-    implementation 'com.github.CST-Group:WS3DProxy:0.0.3'
+    implementation project(':cst')
+    implementation project(':cst-bindings')
+    implementation project(':cst-desktop')
+    implementation project(':WS3DProxy')
     implementation 'org.json:json:20180813'
     testImplementation group: 'junit', name: 'junit', version: '4.10'
 }
@@ -31,9 +53,7 @@ jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     archiveClassifier = 'full'
     manifest {
-      attributes(
-        'Main-Class': mainClassName
-      )
+      attributes('Main-Class': mainClassName)
     }
     from sourceSets.main.output
     dependsOn configurations.runtimeClasspath
