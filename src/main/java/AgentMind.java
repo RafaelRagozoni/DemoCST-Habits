@@ -65,7 +65,7 @@ public class AgentMind extends Mind {
         createCodeletGroup("Motor");
         // Memories
         createMemoryGroup("Sensory");
-        createMemoryGroup("Working");
+        createMemoryGroup("Perceptual");
         createMemoryGroup("Motor");
 
         // Declare Memory Objects
@@ -109,13 +109,13 @@ public class AgentMind extends Mind {
         Thing closestApple = null;
         Idea closestApple_idea = Idea.createIdea("closestApple",closestApple, Idea.guessType("AbstractObject",null,1.0,0.5));
         closestAppleMO=createMemoryObject("CLOSEST_APPLE", closestApple_idea);
-        registerMemory(closestAppleMO,"Working");
+        registerMemory(closestAppleMO,"Perceptual");
 
         // KnownApples
         List<Thing> knownApples_list = Collections.synchronizedList(new ArrayList<Thing>());
         Idea knownApples_list_idea = Idea.createIdea("knownApples",knownApples_list, Idea.guessType("AbstractObject",null,1.0,0.5));
         knownApplesMO=createMemoryObject("KNOWN_APPLES", knownApples_list_idea);
-        registerMemory(knownApplesMO,"Working");
+        registerMemory(knownApplesMO,"Perceptual");
 
         // Legs
         legsMO=createMemoryObject("LEGS");
