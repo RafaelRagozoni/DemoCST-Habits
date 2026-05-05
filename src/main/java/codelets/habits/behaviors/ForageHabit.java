@@ -41,11 +41,6 @@ public class ForageHabit implements Habit {
                 return null;
             }
         }
-        //else activation=0.0;
-        //JSONObject message=new JSONObject();
-        // message.put("ACTION", "FORAGE");
-        // return new Idea("legsAction", message.toString());
-        return comm_idea; //workaround to avoid resetting what GoToClosestApple is doing
-        // return null; //  bug: without activation, it tries to set legsAction to null even when the legsAction might be go to apple
+        return null;
     }
 }

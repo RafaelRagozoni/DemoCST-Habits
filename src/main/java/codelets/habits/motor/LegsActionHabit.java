@@ -22,7 +22,7 @@ public class LegsActionHabit implements Habit {
         this.c = nc;
     }
 
-    @Override 
+    @Override
     public Idea exec(Idea idea) {
         // get legs action
         String comm = null;

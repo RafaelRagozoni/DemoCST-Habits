@@ -83,9 +83,7 @@ public class GoToClosestAppleHabit implements Habit {
                 return null;
             }	
         } else {
-            // activation=0.0;
-            //return new Idea("legsAction", "");
-            return comm_idea; // workaround to avoid resetting what Forage is doing
+            return null;
         }
     }
 
