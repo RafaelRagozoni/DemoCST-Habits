@@ -83,48 +83,50 @@ public class AgentMind extends Mind {
         // Vision
         List<Thing> vision_list = Collections.synchronizedList(new ArrayList<Thing>());
         Idea vision_list_idea = Idea.createIdea("vision",vision_list, Idea.guessType("AbstractObject",null,1.0,0.5));
-        visionMO=createMemoryObject("VISION",vision_list_idea);
+        visionMO=createMemoryObject("vision",vision_list_idea);
         registerMemory(visionMO,"Sensory");
 
         // InnerSense
+        // Child names must match what InnerSenseHabit and other habits call via idea.get("path").
+        // Using new Idea() (not createIdea) for children to avoid static-repo aliasing on short names.
         Idea cis = Idea.createIdea("cis","", Idea.guessType("AbstractObject",null,1.0,0.5));
-        cis.add(Idea.createIdea("cis.pitch", 0D, Idea.guessType("Property", null,1.0,0.5)));
-        cis.add(Idea.createIdea("cis.fuel", 0D, Idea.guessType("Property", null,1.0,0.5)));
-        Idea position = Idea.createIdea("cis.position","", Idea.guessType("Property",null,1.0,0.5));
-        position.add(Idea.createIdea("cis.position.x",0D,Idea.guessType("QualityDimension",null,1.0,0.5)));
-        position.add(Idea.createIdea("cis.position.y",0D,Idea.guessType("QualityDimension",null,1.0,0.5)));
+        cis.add(new Idea("pitch", 0D, Idea.guessType("Property", null,1.0,0.5)));
+        cis.add(new Idea("fuel", 0D, Idea.guessType("Property", null,1.0,0.5)));
+        Idea position = new Idea("position","", Idea.guessType("Property",null,1.0,0.5));
+        position.add(new Idea("x", 0D, Idea.guessType("QualityDimension",null,1.0,0.5)));
+        position.add(new Idea("y", 0D, Idea.guessType("QualityDimension",null,1.0,0.5)));
         cis.add(position);
-        Idea fov = Idea.createIdea("cis.FOV","", Idea.guessType("Property", null,1.0,0.5));
-        Idea bounds = Idea.createIdea("cis.FOV.bounds","", Idea.guessType("Property", null,1.0,0.5));
-        bounds.add(Idea.createIdea("cis.FOV.bounds.x",null, Idea.guessType("Property", null,1.0,0.5)));
-        bounds.add(Idea.createIdea("cis.FOV.bounds.y",null, Idea.guessType("Property", null,1.0,0.5)));
-        bounds.add(Idea.createIdea("cis.FOV.bounds.height",null, Idea.guessType("Property", null,1.0,0.5)));
-        bounds.add(Idea.createIdea("cis.FOV.bounds.width",null, Idea.guessType("Property", null,1.0,0.5)));
+        Idea fov = new Idea("FOV","", Idea.guessType("Property", null,1.0,0.5));
+        Idea bounds = new Idea("bounds","", Idea.guessType("Property", null,1.0,0.5));
+        bounds.add(new Idea("x", null, Idea.guessType("Property", null,1.0,0.5)));
+        bounds.add(new Idea("y", null, Idea.guessType("Property", null,1.0,0.5)));
+        bounds.add(new Idea("height", null, Idea.guessType("Property", null,1.0,0.5)));
+        bounds.add(new Idea("width", null, Idea.guessType("Property", null,1.0,0.5)));
         fov.add(bounds);
-        fov.add(Idea.createIdea("cis.FOV.npoints",0, Idea.guessType("Property", null,1.0,0.5)));
-        fov.add(Idea.createIdea("cis.FOV.points","", Idea.guessType("Property", null,1.0,0.5)));
+        fov.add(new Idea("npoints", 0, Idea.guessType("Property", null,1.0,0.5)));
+        fov.add(new Idea("points","", Idea.guessType("Property", null,1.0,0.5)));
         cis.add(fov);
-        innerSenseMO=createMemoryObject("INNER", cis);
+        innerSenseMO=createMemoryObject("cis", cis);
         registerMemory(innerSenseMO,"Sensory");
 
         // ClosestApple
         Thing closestApple = null;
         Idea closestApple_idea = Idea.createIdea("closestApple",closestApple, Idea.guessType("AbstractObject",null,1.0,0.5));
-        closestAppleMO=createMemoryObject("CLOSEST_APPLE", closestApple_idea);
+        closestAppleMO=createMemoryObject("closestApple", closestApple_idea);
         registerMemory(closestAppleMO,"Perceptual");
 
         // KnownApples
         List<Thing> knownApples_list = Collections.synchronizedList(new ArrayList<Thing>());
         Idea knownApples_list_idea = Idea.createIdea("knownApples",knownApples_list, Idea.guessType("AbstractObject",null,1.0,0.5));
-        knownApplesMO=createMemoryObject("KNOWN_APPLES", knownApples_list_idea);
+        knownApplesMO=createMemoryObject("knownApples", knownApples_list_idea);
         registerMemory(knownApplesMO,"Perceptual");
 
         // Legs
-        legsMO=createMemoryObject("LEGS");
+        legsMO=createMemoryObject("legsAction");
         registerMemory(legsMO,"Motor");
 
         // Hands
-        handsMO=createMemoryObject("HANDS", "");
+        handsMO=createMemoryObject("handsAction", "");
         registerMemory(handsMO,"Motor");
 
         // Declare Memory Containers
@@ -134,13 +136,12 @@ public class AgentMind extends Mind {
         MemoryContainer motorMC;
 
         // Initialize Memory Containers
-        sensoryMC = createMemoryContainer("SensoryHabitsMemory");
-        perceptionMC = createMemoryContainer("PerceptionHabitsMemory");
-        behaviorMC = createMemoryContainer("BehaviorHabitsMemory");
-        motorMC = createMemoryContainer("MotorHabitsMemory");
+        sensoryMC = createMemoryContainer("SensoryHabits");
+        perceptionMC = createMemoryContainer("PerceptionHabits");
+        behaviorMC = createMemoryContainer("BehavioralHabits");
+        motorMC = createMemoryContainer("MotorHabits");
 
         // Initialize Execution Habits
-
         ExecutionHabits sensoryExecutionHabits;
         ExecutionHabits perceptionExecutionHabits;
         ExecutionHabits behaviorExecutionHabits;
@@ -160,10 +161,12 @@ public class AgentMind extends Mind {
         List<Habit> sensoryHabits = new ArrayList<Habit>(List.of(visionHabit, innerSenseHabit));
         sensoryExecutionHabits = new ExecutionHabits(sensoryHabits, "Sensory");
 
-        
-        sensoryMC.setI(sensoryExecutionHabits);
+        Idea sensoryIdea = new Idea("Sensory");
+        sensoryIdea.setValue(sensoryExecutionHabits);
+        sensoryIdea.setScope(2);
+        sensoryMC.setI(sensoryIdea);
         HabitExecutionerCodelet sensoryHEC = new HabitExecutionerCodelet();
-        sensoryHEC.setName("sensoryHEC");
+        sensoryHEC.setName("Sensory");
         sensoryHEC.addInput(sensoryMC);
         sensoryHEC.addOutput(visionMO);
         sensoryHEC.addOutput(innerSenseMO);
@@ -184,14 +187,18 @@ public class AgentMind extends Mind {
         List<Habit> perceptionHabits = new ArrayList<Habit>(List.of(appleDetectorHabit, closestAppleDetectorHabit));
         perceptionExecutionHabits = new ExecutionHabits(perceptionHabits, "Perception");
 
-        perceptionMC.setI(perceptionExecutionHabits);
+        Idea perceptionIdea = new Idea("Perception");
+        perceptionIdea.setValue(perceptionExecutionHabits);
+        perceptionIdea.setScope(2);
+        perceptionMC.setI(perceptionIdea);
         HabitExecutionerCodelet perceptionHEC = new HabitExecutionerCodelet();
-        perceptionHEC.setName("perceptionHEC");
+        perceptionHEC.setName("Perception");
         perceptionHEC.addInput(perceptionMC);
+        perceptionHEC.addInput(knownApplesMO);
         perceptionHEC.addInput(innerSenseMO);
         perceptionHEC.addInput(visionMO);
         perceptionHEC.addOutput(knownApplesMO);
-        perceptionHEC.addOutput(innerSenseMO);
+        perceptionHEC.addOutput(closestAppleMO);
         insertCodelet(perceptionHEC);
         registerCodelet(perceptionHEC,"Perception");
 
@@ -214,17 +221,21 @@ public class AgentMind extends Mind {
         List<Habit> behaviorHabits = new ArrayList<Habit>(List.of(goToClosestAppleHabit, eatClosestAppleHabit, forageHabit));
         behaviorExecutionHabits = new ExecutionHabits(behaviorHabits, "Behavioral");
 
-        behaviorMC.setI(behaviorExecutionHabits);
+        Idea behaviorIdea = new Idea("Behavioral");
+        behaviorIdea.setValue(behaviorExecutionHabits);
+        behaviorIdea.setScope(2);
+        behaviorMC.setI(behaviorIdea);
 
         HabitExecutionerCodelet behaviorHEC = new HabitExecutionerCodelet();
 
+        behaviorHEC.setName("Behavioral");
         behaviorHEC.addInput(behaviorMC);
         behaviorHEC.addInput(closestAppleMO);
         behaviorHEC.addInput(innerSenseMO);
         behaviorHEC.addInput(legsMO);
-        behaviorHEC.addOutput(legsMO); // This is the output memory object;
-        behaviorHEC.addOutput(handsMO); // This is the output memory object
         behaviorHEC.addInput(knownApplesMO);
+        behaviorHEC.addOutput(legsMO);
+        behaviorHEC.addOutput(handsMO);
         insertCodelet(behaviorHEC);
         registerCodelet(behaviorHEC,"Behavioral");
 
@@ -238,17 +249,24 @@ public class AgentMind extends Mind {
         Habit handsActionHabit = new HandsActionHabit(env.c);
         hah.setValue(handsActionHabit);
         hah.setScope(2);
-        
+
         List<Habit> motorHabits = new ArrayList<Habit>(List.of(legsActionHabit, handsActionHabit));
         motorExecutionHabits = new ExecutionHabits(motorHabits, "Motor");
 
-        motorMC.setI(motorExecutionHabits);
+        Idea motorIdea = new Idea("Motor");
+        motorIdea.setValue(motorExecutionHabits);
+        motorIdea.setScope(2);
+        motorMC.setI(motorIdea);
 
         HabitExecutionerCodelet motorHEC = new HabitExecutionerCodelet();        
-
+        motorHEC.setName("Motor");
         motorHEC.addInput(motorMC);
         motorHEC.addInput(legsMO);
         motorHEC.addInput(handsMO);
+        motorHEC.addOutput(legsMO);
+        motorHEC.addOutput(handsMO);
+        insertCodelet(motorHEC);
+        registerCodelet(motorHEC,"Motor");
         
         // sets a time step for running the codelets to avoid heating too much your machine
         for (Codelet c : this.getCodeRack().getAllCodelets())
