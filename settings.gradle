@@ -2,7 +2,7 @@ rootProject.name = 'DemoCST-Habits'
 
 include ':cst-desktop', ':WS3DProxy', ':cst-bindings', ':cst'
 
-project(':cst').projectDir = new File('/home/rafael-ragozoni/Mestrado/Projetos/cst-1.5.0')
+project(':cst').projectDir = new File('/home/rafael-ragozoni/Mestrado/Projetos/cst')
 project(':cst-bindings').projectDir = new File('/home/rafael-ragozoni/Mestrado/Projetos/cst-bindings-1.1.0')
 project(':cst-desktop').projectDir = new File('/home/rafael-ragozoni/Mestrado/Projetos/cst-desktop-1.1.0')
 project(':WS3DProxy').projectDir = new File('/home/rafael-ragozoni/Mestrado/Projetos/WS3DProxy-0.0.3')
