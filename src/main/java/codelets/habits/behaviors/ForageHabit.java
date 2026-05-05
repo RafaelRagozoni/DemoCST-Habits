@@ -36,7 +36,7 @@ public class ForageHabit implements Habit {
                 //activation=1.0;
                 return new Idea("legsAction", message.toString());
             } catch (JSONException e) {
-                // TODO Auto-generated catch block
+                // TODO
                 e.printStackTrace();
                 return null;
             }
